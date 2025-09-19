@@ -6,9 +6,14 @@ function App() {
   const lists = ['List 1', 'List 2', 'List 3', 'List 4']
   const [listItems, setListItems] = useState<string[][]>(lists.map(() => []))
   
-  const addItemToList = (lists: string[][], listIndex: number, item: string) => {
+  const addItemToList = (lists: string[][], listIndex: number, item: string, itemIndex: number) => {
     const firstArray = (lists.slice(0, listIndex))
-    const newList= [...lists[listIndex], item]
+
+    const newList = [
+      ...lists[listIndex].slice(0, itemIndex),
+      item,
+      ...lists[listIndex].slice(itemIndex),
+    ]
     const lastArray = (lists.slice(listIndex + 1))
 
     return [
@@ -45,14 +50,14 @@ function App() {
               listItems={listItems[listIndex]}
               enableBack={listIndex !== 0}
               enableForward={listIndex !== listItems.length - 1}
-              addToList={(item: string) => setListItems(addItemToList(listItems, listIndex, item))
+              addToList={(item: string) => setListItems(addItemToList(listItems, listIndex, item, listItems[listIndex].length))
               }
               moveLeft={(itemIndex) => {
-                const newListItems = addItemToList(listItems, listIndex-1, listItems[listIndex][itemIndex])
+                const newListItems = addItemToList(listItems, listIndex-1, listItems[listIndex][itemIndex], itemIndex)
                 setListItems(removeItemFromList(newListItems, listIndex, itemIndex))
               }}
               moveRight={(itemIndex) => {
-                const newListItems = addItemToList(listItems, listIndex+1, listItems[listIndex][itemIndex])
+                const newListItems = addItemToList(listItems, listIndex+1, listItems[listIndex][itemIndex], itemIndex)
                 setListItems(removeItemFromList(newListItems, listIndex, itemIndex))
               }}
             />
