@@ -1,0 +1,10 @@
+.listContainer {
+  width: 20%;
+  border: 2px solid white;
+}
+
+.listContainer > div > input {
+  padding: 2px; 
+  box-sizing: border-box;
+  width: 100% 
+}
